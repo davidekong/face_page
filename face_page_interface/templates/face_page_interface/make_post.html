@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Post</title>
+        <meta charset="utf-8"/>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'face_page_interface/style.css' %}">
+    </head>
+    <body>
+        <div class='nav_bar'>
+            <a href="{% url 'logIn' %}"><button class="nav_elem">Logout</button></a>
+            <a href="{% url 'dashboard' id %}"><button class="nav_elem">Account</button></a>
+            <a href="{% url 'make_post' id %}"><button class="nav_elem">Make Post</button></a>
+            <a href="{% url 'home' id %}"><button class="nav_elem">Home</button></a>
+            <div class="header"><p>Face Page</p></div>
+        </div>
+        <form action="" method="post" class="center" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="picture">Pick a photo</label>
+            <label for="picture" class="add">+</label>
+            <input type="file" name="picture" id="picture" class="add_picture" value="test" onchange="PreviewImage();" />
+            <img id="image" class="preview-image"/>
+            <input type="text" name="title" id="title" placeholder="Enter a title...">
+            <br>
+            <br>
+            <label for="text_field">Add context to this photo:</label>
+            <textarea name="text_field" id="text_field" cols="50" rows="10" class="text">This picture is about love...</textarea>
+            <input type="submit" value="Post" class="post" />
+        </form>
+        <script type="text/javascript">
+            function PreviewImage() {
+                var fR = new FileReader();
+        
+                fR.readAsDataURL(document.getElementById("picture").files[0]);
+                fR.onload = function (event) {
+                    document.getElementById('image').src = event.target.result;
+                }
+            }
+        
+        </script>
+    </body>
+</html>

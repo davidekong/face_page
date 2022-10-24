@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Register</title>
+        <meta charset="utf-8"/>
+        
+    </head>
+</html>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" id="picture" name="picture">
+    <input type="text" name="bio" id="bio">
+    <input type="submit" value="Submit">
+</form>

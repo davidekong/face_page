@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dashboard</title>
+        <meta charset="utf-8"/>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'face_page_interface/style.css' %}">
+    </head>
+    <body>
+        <div class='nav_bar'>
+            <a href="{% url 'logIn' %}"><button class="nav_elem">Logout</button></a>
+            <a href="{% url 'dashboard' current_custom_user.id %}"><button class="nav_elem">Account</button></a>
+            <a href="{% url 'make_post' id %}"><button class="nav_elem">Make Post</button></a>
+            <a href="{% url 'home' id %}"><button class="nav_elem">Home</button></a>
+            <div class="header"><p>Face Page</p></div>
+        </div>
+        <div>
+            <div class="content">
+                <div class="info">
+                    <p>{{ other_user.username }}</p>
+                    <p>Followers: {{ other_followers | length }}</p>
+                    <p>Following: {{ other_following | length }}</p>
+                    <img src={{ customuser.picture.url }} alt="Profile Picture" width="250" height="250" class="prof">
+                    <p>{{ customuser.bio }}</p>
+                    {% if other_user != user %}
+                        {% if other_user not in following %}
+                            <form action="" method="get">
+                                <button type="submit" name="follow">Follow</button>
+                            </form>
+                        
+                        {% else %}
+                            <form action="" method="get">
+                                <button type="submit" name="unfollow">Unfollow</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <div class="posts">
+                    {% for post in posts %}
+                        <div class="p1">
+                            <img src= {{ post.pic.url }} alt="Post Pic" class="image">
+                            <a href="{% url 'post' post.id %}" class="op">
+                                <div>
+                                    <p class="image-text">{{ post.title }}</p>
+                                    <p><span> ❤ </span>: {{ post.likes }}</p>
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+
+    </body>
+</html>

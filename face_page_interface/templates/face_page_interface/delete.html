@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dashboard</title>
+        <meta charset="utf-8"/>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'face_page_interface/style.css' %}">
+    </head>
+    <body>
+        <form class="delete" action="" method="get">
+            <p>Are you sure you want to delete this post?</p>
+            <div class="buttons">
+                <button type="submit" class="buttons-delete" name="delete">Delete</button>
+                <a href="{% url 'post' id %}"><button type="submit" class="buttons-cancel">Cancel</button></a>
+            </div>
+        </form>
+    </body>
+    
+</html>

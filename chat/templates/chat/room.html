@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Chat Room</title>
+    </head>
+    <body>
+        <div id="messages">
+
+        </div>
+        <form action="" id="form" method='post'>
+            <input type="text" name="p" id="">
+            <input type="submit" value="press">
+            
+        </form>
+
+        {{ id|json_script:"id" }}
+
+        <script> 
+            const id = JSON.parse(document.getElementById('id').textContent);
+            const url = `ws://${window.location.host}/ws/room/` + id
+            const chatSocket = new WebSocket(url)
+            chatSocket.onmessage = function(e) {
+                let data = JSON.parse(e.data)
+                console.log("Data: ", data)
+                if (data.type == 'chat'){
+                    var messages = document.getElementById("messages")
+                    messages.insertAdjacentHTML('beforeend', `<p>${data.message}</p>`)
+                }
+            }
+
+            let form = document.getElementById('form')
+            form.addEventListener('submit', (e) => {
+                e.preventDefault()
+                chatSocket.send(JSON.stringify({
+                    'message': [e.target.p.value, id]
+                }))
+                form.reset()
+            })
+        </script>
+    </body>
+</html>

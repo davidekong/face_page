@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dashboard</title>
+        <meta charset="utf-8"/>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'face_page_interface/style.css' %}">
+    </head>
+    <body>
+        <div class='nav_bar'>
+            <a href="{% url 'logIn' %}"><button class="nav_elem">Logout</button></a>
+            <a href="{% url 'dashboard' custom_user.id %}"><button class="nav_elem">Account</button></a>
+            <a href="{% url 'make_post' custom_user.id %}"><button class="nav_elem">Make Post</button></a>
+            <a href="{% url 'home' custom_user.id %}"><button class="nav_elem">Home</button></a>
+            <div class="header"><p>Face Page</p></div>
+        </div>
+        <div>
+            <a href="{% url 'dashboard' other_custom_user.id %}">{{ user.username }}</a>
+        </div>
+        <form action="" method="get" id="form">
+            
+            <div class="post-section">
+                <div class="image-and-like">
+                    <img src={{ pic.url }} alt="" class="post-section-image">
+                    <div class="image-overlap">
+                        {% if is_liked %}
+                            <button type="submit" onclick="click1();" id="like_button" name="like_button" class="like-button"style="color:red">❤ {{ likes }}</button>
+                        {% else %}
+                            <button type="submit" onclick="click1();" id="like_button" name="like_button" class="like-button" style="color:white">❤ {{ likes }}</button>
+                        {% endif %}
+                    </div>
+                    <script>
+                        var btn = document.getElementById('like_button');
+                        var form = document.getElementById('form');
+                        function click1() {
+                           btn.style.color = 'red'
+                           
+                        }
+                    </script>
+                </div>
+                <div class="description">
+                    <span>{{ text }}</span>
+                </div>
+                <div class="comment-section">
+                    <div class="title">
+                        <p>Comments - {{ comments | length }}</p>
+                    </div>
+                    <div class="comment-show">
+                        {% for comment in comments %}
+                            <div class="full-comment">
+                                <div class="user-info">
+                                    <img src={{ custom_user.picture.url }} alt="Profile Picture" width="250" height="250" class="comment-prof">
+                                    <p>{{ current_user.username }}</p>
+                                </div>
+                                <p class="comment-text">{{ comment.comment }}</p>
+                            </div>
+                            
+                        {% endfor %}
+                    </div>
+                    <div class="text-section">
+                        <textarea name="comment" id="comment" class="comment-bubble" placeholder="Share your thoughts..."></textarea>
+                        <input type="submit" value="Post" class="post-button" name="post_comment">
+                    </div>
+                </div>
+            </div>
+        </form>
+        {% if current_user == user %}
+                <a href="{% url 'delete1' id %}"><button>Delete this post</button></a>
+        {% endif %}
+    </body>
+    
+</html>

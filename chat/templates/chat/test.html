@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <form action="" method="post" id="form">
+        {% csrf_token %}
+        <input type="text" name="p" id="">
+        <input type="submit" value="press">
+    </form>
+</html>
+
+<script> 
+    let url = `ws://${window.location.host}/ws/socket-server/`
+    const chatSocket = new WebSocket(url)
+    chatSocket.onmessage = function(e) {
+        let data = JSON.parse(e.data)
+        console.log("Data: ", data)
+        if (data.type == 'chat'){
+            var messages = document.getElementById("messages")
+            messages.insertAdjacentHTML('beforeend', `<div><p>${data.message}</p></div>`)
+        }
+    }
+
+    let form = document.getElementById('form')
+    form.addEventListener('submit', (e) => {
+        chatSocket.send(JSON.stringify({
+            'message': e.target.p.value
+        }))
+    })
+</script>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dashboard</title>
+        <meta charset="utf-8"/>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'face_page_interface/style.css' %}">
+    </head>
+    <body>
+        <div class='nav_bar'>
+            <a href="{% url 'logIn' %}"><button class="nav_elem">Logout</button></a>
+            <a href="{% url 'dashboard' id %}"><button class="nav_elem">Account</button></a>
+            <a href="{% url 'make_post' id %}"><button class="nav_elem">Make Post</button></a>
+            <a href="{% url 'home' id %}"><button class="nav_elem">Home</button></a>
+            <form action="" class="search-bar" method="get">
+                <input type="text" class="input-box" name="search" id="search">
+                <input type="submit" value="Search" name="get_search">
+            </form>
+            <div class="header"><p>Face Page</p></div>
+        </div>
+        <div class="home-content">
+            <form action="" method="get" class="side-bar">
+                <button class="side-button" type="submit" name="all_posts">All Posts</button>
+                <button class="side-button" type="submit" name="your_posts">Your Posts</button>
+                <button class="side-button" type="submit" name="following_posts">Following</button>
+            </form>
+            <div class="posts">
+                {% for post in posts %}
+                    <div class="p1">
+                        <img src= {{ post.pic.url }} alt="Post Pic" class="image">
+                        <a href="{% url 'post' post.id %}" class="op">
+                            <div>
+                                <p class="image-text">{{ post.title }}</p>
+                                <p><span> ❤ </span>: {{ post.likes }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </body>
+</html>
