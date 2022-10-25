@@ -49,8 +49,8 @@
                         {% for comment in comments %}
                             <div class="full-comment">
                                 <div class="user-info">
-                                    <img src={{ custom_user.picture.url }} alt="Profile Picture" width="250" height="250" class="comment-prof">
-                                    <p>{{ current_user.username }}</p>
+                                    <img src={{ comment.customuser.picture.url }} alt="Profile Picture" width="250" height="250" class="comment-prof">
+                                    <p>{{ comment.customuser.user.username }}</p>
                                 </div>
                                 <p class="comment-text">{{ comment.comment }}</p>
                             </div>

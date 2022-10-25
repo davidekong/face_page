@@ -23,7 +23,7 @@ class Post(models.Model):
     users_liked = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_posts')
 
 class CommentModel(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    customuser = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=None)
     comment = models.CharField(max_length=1000)
     likes = models.IntegerField(default=0)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

@@ -185,7 +185,7 @@ def post(request, pk):
         if 'post_comment' in request.GET:
             comment = request.GET.get('comment')
             post = Post.objects.get(pk=context['id'])
-            new_comment = CommentModel.objects.create(user=request.user, comment=comment, likes=0, post=post)
+            new_comment = CommentModel.objects.create(customuser=CustomUser.objects.get(user=request.user), comment=comment, likes=0, post=post)
             new_comment.save()
             context['comments'] = list(Post.objects.get(pk=pk).commentmodel_set.all())
             return redirect('post', pk)
@@ -206,7 +206,7 @@ def post(request, pk):
 
 def delete1(request, pk):
     context = {
-        'id': pk
+        '': pk
     }
     if request.method == 'GET':
         if 'delete' in request.GET:
